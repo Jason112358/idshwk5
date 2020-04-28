@@ -4,4 +4,5 @@
 + test.py read datafile input.domain, write the result to output.csv
 ## Data
 + The sum of numbers
-+ the sum of letters
++ The sum of letters
+## Result
