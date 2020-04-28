@@ -2,6 +2,8 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 
 domainlist = []
+testdmlist = []
+testlist = []
 class Domain:
         def __init__(self,_name,_label):
                 self.name = _name
@@ -34,21 +36,42 @@ def initData(filename):
                         label = tokens[1]
                         domainlist.append(Domain(name,label))
 
-# TODO 1:read the test.txt and output the result
+def readTest(filename):
+        with open(filename) as f:
+                for line in f:
+                        numSum = 0
+                        ltrSum = 0
+                        line = line.strip()
+                        if line.startswith("#") or line == "":
+                                continue
+                        for letter in line:
+                                if letter.isdigit() == True:
+                                        numSum = numSum + 1
+                                elif letter != '.':
+                                        ltrSum = ltrSum + 1
+                        testdmlist.append(line)
+                        testlist.append([numSum,ltrSum])
 
 def main():
+        tmp = 0
         initData("train.txt")
+        readTest("test.txt")
         featureMatrix = []
         labelList = []
         for item in domainlist:
                 featureMatrix.append(item.returnData())
                 labelList.append(item.returnLabel())
-
         clf = RandomForestClassifier(random_state=0)
         clf.fit(featureMatrix,labelList)
-        print(clf.predict([[6,20]]))
-        print(clf.predict([[9,18]]))
+        prelist = clf.predict(testlist)
+        with open('result.txt','wt') as resfile:
+                for each in prelist:
+                    if each == 1:
+                            print(testdmlist[tmp]+",dga",file = resfile)
+                    else:
+                            print(testdmlist[tmp]+",notdga",file = resfile)
+                    tmp = tmp + 1
 
 if __name__ == '__main__':
         main()
-
+        print("FINISHED")
