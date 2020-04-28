@@ -1,2 +1,7 @@
 # idshwk5
-IDShwk
+## Requirement
++ Detect the DGA domains from the corpus
++ test.py read datafile input.domain, write the result to output.csv
+## Data
++ The sum of numbers
++ the sum of letters
